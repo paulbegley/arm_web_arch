@@ -114,6 +114,18 @@
       "resources": [
         {
           "apiVersion": "2015-08-01",
+          "name": "appsettings",
+          "type": "config",
+          "dependsOn": [
+            "[concat('Microsoft.Web/Sites/', variables('webSiteName'))]"
+          ],
+          "properties": {
+            "WEBSITE_NODE_DEFAULT_VERSION": "4.2.3",
+            "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(concat('Microsoft.Insights/components/',variables('webSiteName'))).InstrumentationKey]"
+          }
+        },
+        {
+          "apiVersion": "2015-08-01",
           "type": "slots",
           "name": "Staging",
           "dependsOn": [
@@ -124,6 +136,17 @@
 
           },
           "resources": [
+            {
+              "apiVersion": "2015-08-01",
+              "name": "appsettings",
+              "type": "config",
+              "dependsOn": [ "[resourceId('Microsoft.Web/Sites/Slots',variables('webSiteName'),'staging')]" ],
+              "properties": {
+                "WEBSITE_NODE_DEFAULT_VERSION": "4.2.3",
+                "APPINSIGHTS_INSTRUMENTATIONKEY": "73635ff0-8c6a-40c5-841c-798f665fddce"
+
+              }
+            },
             {
               "apiVersion": "2016-03-01",
               "name": "web",
